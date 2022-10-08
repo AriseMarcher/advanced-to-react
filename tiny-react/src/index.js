@@ -21,6 +21,11 @@ const virtualDOM = (
 )
 
 // 将virtual对象转换成真实Dom对象
-TinyReact.render(virtualDOM, root)
+// TinyReact.render(virtualDOM, root)
 
+function Heart () {
+  return <div>&hearts;</div>
+}
+
+TinyReact.render(<Heart />, root)
 console.log(virtualDOM)
