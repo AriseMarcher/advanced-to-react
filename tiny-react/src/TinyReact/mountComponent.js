@@ -26,7 +26,10 @@ function buildFunctionComponent (virtualDOM) {
 }
 
 function buildClassComponent (virtualDOM) {
-  const component = new virtualDOM.type()
+  // 此处执行的就是构造函数 constructor
+  // 子类调用父类的构造函数 父类中存储了props
+  // 这样子类又继承自父类，就能通过this.props拿到父类中的属性和方法了
+  const component = new virtualDOM.type(virtualDOM.props || {})
   const nextVirtualDOM = component.render()
   return nextVirtualDOM
 }
