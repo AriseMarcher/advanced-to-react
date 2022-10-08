@@ -39,4 +39,12 @@ function Demo () {
   return <div>这是Demo</div>
 }
 
-TinyReact.render(<Heart title="hello React" />, root)
+class Alert extends TinyReact.Component {
+  render () {
+    return <div>Hello React</div>
+  }
+}
+
+// TinyReact.render(<Heart title="hello React" />, root)
+TinyReact.render(<Alert />, root)
+

@@ -7,9 +7,11 @@ export default function mountComponent(virtualDOM, container) {
 
   // 判断组件是类组件还是函数组件
   if (isFunctionComponent(virtualDOM)) {
+    // 函数组件
     nextVirtualDOM = buildFunctionComponent(virtualDOM)
-    console.log('1111111')
-    console.log(nextVirtualDOM)
+  } else {
+    // 类组件
+    nextVirtualDOM = buildClassComponent(virtualDOM)
   }
 
   if (isFunction(nextVirtualDOM)) {
@@ -21,4 +23,10 @@ export default function mountComponent(virtualDOM, container) {
 
 function buildFunctionComponent (virtualDOM) {
   return virtualDOM.type(virtualDOM.props || {})
+}
+
+function buildClassComponent (virtualDOM) {
+  const component = new virtualDOM.type()
+  const nextVirtualDOM = component.render()
+  return nextVirtualDOM
 }
