@@ -23,11 +23,11 @@ const virtualDOM = (
 // 将virtual对象转换成真实Dom对象
 // TinyReact.render(virtualDOM, root)
 
-function Heart () {
-  return <Demo />
+function Heart (props) {
   return (
     <div>
       一颗心
+      {props.title}
       <p>hello</p>
       <span>&hearts;</span>
       <Demo />
@@ -39,5 +39,4 @@ function Demo () {
   return <div>这是Demo</div>
 }
 
-TinyReact.render(<Heart />, root)
-console.log(virtualDOM)
+TinyReact.render(<Heart title="hello React" />, root)

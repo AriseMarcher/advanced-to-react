@@ -11,5 +11,4 @@ export default function mountElement (virtualDOM, container) {
     // NativeElement
     mountNativeElement(virtualDOM, container)
   }
-  console.log(virtualDOM)
 }
