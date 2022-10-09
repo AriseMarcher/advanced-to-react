@@ -1,15 +1,18 @@
 import createDomElement from './createDOMElement'
 import mountElement from './mountElement'
+import unmountNode from './unmountNode'
 import updateNodeElement from './updateNodeElement'
 import updateTextNode from './updateTextNode'
 
 export default function diff (virtualDOM, container, oldDOM) {
+  
   const oldVirtualDOM = oldDOM && oldDOM._virtualDOM
   // 判断 oldDOM 是否存在
   if (!oldDOM) {
     mountElement(virtualDOM, container)
   } else if (virtualDOM.type !== oldVirtualDOM.type && typeof virtualDOM !== 'function') {
     // 使用virtualDOM创建方法
+    
     const newElement = createDomElement(virtualDOM)
     oldDOM.parentNode.replaceChild(newElement, oldDOM)
   } else if (oldVirtualDOM && virtualDOM.type === oldVirtualDOM.type) {
@@ -25,5 +28,20 @@ export default function diff (virtualDOM, container, oldDOM) {
     virtualDOM.children.forEach((child, i) => {
       diff(child, oldDOM, oldDOM.childNodes[i])
     })
+
+    // 删除节点
+    // 获取旧节点
+    let oldChildNodes = oldDOM.childNodes
+    // 判断旧节点的数量
+    if (oldChildNodes.length > virtualDOM.children.length) {
+      // 有节点需要被删除
+      for (
+        let i = oldChildNodes.length - 1;
+        i > virtualDOM.children.length - 1;
+        i--
+      ) {
+        unmountNode(oldChildNodes[i])
+      }
+    }
   }
 }
