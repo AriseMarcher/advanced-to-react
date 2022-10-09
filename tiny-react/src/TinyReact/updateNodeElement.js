@@ -7,9 +7,6 @@ export default function updateNodeElement(
   const newProps = virtualDOM.props || {}
   const oldProps = oldVirtualDOM && oldVirtualDOM.props || {}
 
-  console.log(newProps)
-  console.log(oldProps)
-
   Object.keys(newProps).forEach(propName => {
     // 获取属性值
     const newPropsValue = newProps[propName]
@@ -20,14 +17,15 @@ export default function updateNodeElement(
       if (propName.slice(0, 2) === "on") {
         // 事件名称
         const eventName = propName.toLowerCase().slice(2)
-        // 为元素添加时间
-        newElement.addEventListener(eventName, newPropsValue)
 
+        // 为元素添加事件
+        newElement.addEventListener(eventName, newPropsValue)
+        
         // 删除原有的事件的事件处理函数
         if (oldPropsValue) {
           newElement.removeEventListener(eventName, oldPropsValue)
+        
         }
-
       } else if (propName === "value" || propName === "checked") {
         newElement[propName] = newPropsValue
       } else if (propName !== "children") {

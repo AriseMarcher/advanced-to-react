@@ -13,7 +13,7 @@ export default function mountComponent(virtualDOM, container) {
     // 类组件
     nextVirtualDOM = buildClassComponent(virtualDOM)
   }
-
+  
   if (isFunction(nextVirtualDOM)) {
     mountComponent(nextVirtualDOM, container)
   } else {

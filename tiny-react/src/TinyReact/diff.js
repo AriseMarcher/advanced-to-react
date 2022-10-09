@@ -13,9 +13,10 @@ export default function diff (virtualDOM, container, oldDOM) {
       updateTextNode(virtualDOM, oldVirtualDOM, oldDOM)
     } else {
       // 更新元素属性
-      updateNodeElement(oldDOM, virtualDOM)
+      updateNodeElement(oldDOM, virtualDOM, oldVirtualDOM)
     }
 
+    // 递归子节点进行对比
     virtualDOM.children.forEach((child, i) => {
       diff(child, oldDOM, oldDOM.childNodes[i])
     })

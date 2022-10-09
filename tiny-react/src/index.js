@@ -20,6 +20,7 @@ const virtualDOM = (
   </div>
 )
 
+console.log(virtualDOM)
 const modifyDOM = (
   <div className="container">
     <h1>你好 Tiny React</h1>
@@ -45,34 +46,34 @@ setTimeout(() => {
 // 将virtual对象转换成真实Dom对象
 TinyReact.render(virtualDOM, root)
 
-function Heart (props) {
-  return (
-    <div>
-      一颗心
-      {props.title}
-      <p>hello</p>
-      <span>&hearts;</span>
-      <Demo />
-    </div>
-  )
-}
+// function Heart (props) {
+//   return (
+//     <div>
+//       一颗心
+//       {props.title}
+//       <p>hello</p>
+//       <span>&hearts;</span>
+//       <Demo />
+//     </div>
+//   )
+// }
 
-function Demo () {
-  return <div>这是Demo</div>
-}
+// function Demo () {
+//   return <div>这是Demo</div>
+// }
 
-class Alert extends TinyReact.Component {
-  constructor (props) {
-    super(props)
-  }
+// class Alert extends TinyReact.Component {
+//   constructor (props) {
+//     super(props)
+//   }
 
-  render () {
-    return <div>
-      <p>姓名：{this.props.name}</p>
-      <p>年龄：{this.props.age}</p>
-    </div>
-  }
-}
+//   render () {
+//     return <div>
+//       <p>姓名：{this.props.name}</p>
+//       <p>年龄：{this.props.age}</p>
+//     </div>
+//   }
+// }
 
 // TinyReact.render(<Heart title="hello React" />, root)
 // TinyReact.render(<Alert name="张三" age={20} />, root)
