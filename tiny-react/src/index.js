@@ -14,7 +14,7 @@ const virtualDOM = (
     {2 == 2 && <div>2</div>}
     <span>这是一段内容</span>
     <button onClick={() => alert("你好")}>点击我</button>
-    <h3>这个将会被删除</h3>
+    <h3>这个将会被删除的H3</h3>
     2, 3
     <input type="text" value="13" />
   </div>
@@ -33,7 +33,7 @@ const modifyDOM = (
     {2 == 2 && <div>2</div>}
     <span>这是一段被修改的内容内容</span>
     <button onClick={() => alert("你好！！！")}>点击我</button>
-    <h3>这个将会被删除</h3>
+    <h6>这个将会被删除的H6</h6>
     2, 3
     <input type="text" />
   </div>
