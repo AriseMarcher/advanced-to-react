@@ -59,6 +59,15 @@ const executeTask = fiber => {
   if (fiber.child) {
     return fiber.child
   }
+
+  let currentExecutelyFiber = fiber
+  while (currentExecutelyFiber.parent) {
+    if (currentExecutelyFiber.sibling) {
+      return currentExecutelyFiber.sibling
+    }
+    currentExecutelyFiber = currentExecutelyFiber.parent
+  }
+
   console.log(fiber)
 }
 
