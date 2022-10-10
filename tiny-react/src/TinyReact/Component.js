@@ -34,7 +34,7 @@ export default class Component {
 
   // 生命周期函数
   componentWillMount () {}
-  componentDiDMount () {}
+  componentDidMount () {}
   componentWillReceiveProps (nextProps) {}
   shouldComponentUpdate (nextProps, nextState) {
     return nextProps != this.props || nextState != this.state

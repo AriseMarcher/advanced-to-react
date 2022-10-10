@@ -4,6 +4,7 @@ import mountNativeElement from "./mountNativeElement";
 
 export default function mountComponent(virtualDOM, container, oldDOM) {
   let nextVirtualDOM = null
+  let component = null
 
   // 判断组件是类组件还是函数组件
   if (isFunctionComponent(virtualDOM)) {
@@ -12,14 +13,22 @@ export default function mountComponent(virtualDOM, container, oldDOM) {
   } else {
     // 类组件
     nextVirtualDOM = buildClassComponent(virtualDOM)
+    component = nextVirtualDOM.component
   }
-  
+
   // 判断类组件或函数组件的第一层还是类组件或函数组件
   if (isFunction(nextVirtualDOM)) {
     mountComponent(nextVirtualDOM, container, oldDOM)
   } else {
     // 类组件或函数组件的virtualDOM第一层都是普通元素走这里
     mountNativeElement(nextVirtualDOM, container, oldDOM)
+  }
+
+  if (component) {
+    component.componentDidMount()
+    if (component.props && component.props.ref) {
+      component.props.ref(component)
+    }
   }
 }
 
