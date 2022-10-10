@@ -7,6 +7,8 @@ const createStateNode = fiber => {
     return createDomElement(fiber)
   } else if (fiber.tag === "class_component") {
     return createReactInstance(fiber)
+  } else {
+    return createReactInstance(fiber)
   }
 }
 

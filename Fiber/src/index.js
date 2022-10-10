@@ -17,10 +17,19 @@ class Greeting extends Component {
   }
 
   render () {
-    return <div>Hello Greeting</div>
+    return <div>Hello Greeting {this.props.title}</div>
   }
 }
 
 // render(jsx, root)
 
-render(<Greeting />, root)
+render(<Greeting title="This is great" />, root)
+
+// function FnComponent (props) {
+//   return <div>
+//     FnComponent
+//     {props.title}
+//   </div>
+// }
+
+// render(<FnComponent title="hello" />, root)

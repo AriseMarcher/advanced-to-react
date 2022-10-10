@@ -136,7 +136,7 @@ var Greeting = /*#__PURE__*/function (_Component) {
   _createClass(Greeting, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, "Hello Greeting");
+      return /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, "Hello Greeting ", this.props.title);
     }
   }]);
 
@@ -144,7 +144,15 @@ var Greeting = /*#__PURE__*/function (_Component) {
 }(_react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // render(jsx, root)
 
 
-Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])( /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement(Greeting, null), root);
+Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])( /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement(Greeting, {
+  title: "This is great"
+}), root); // function FnComponent (props) {
+//   return <div>
+//     FnComponent
+//     {props.title}
+//   </div>
+// }
+// render(<FnComponent title="hello" />, root)
 
 /***/ }),
 
@@ -384,6 +392,8 @@ var createStateNode = function createStateNode(fiber) {
     return Object(_DOM__WEBPACK_IMPORTED_MODULE_0__["createDomElement"])(fiber);
   } else if (fiber.tag === "class_component") {
     return Object(_CreateReactInstance__WEBPACK_IMPORTED_MODULE_1__["createReactInstance"])(fiber);
+  } else {
+    return Object(_CreateReactInstance__WEBPACK_IMPORTED_MODULE_1__["createReactInstance"])(fiber);
   }
 };
 
@@ -528,12 +538,19 @@ var pendingCommit = null;
 var commitAllWork = function commitAllWork(fiber) {
   fiber.effects.forEach(function (item) {
     if (item.effectTag === "placement") {
-      var _fiber = item;
-      var parentFiber = item.parent;
+      // 当前要追加的子节点
+      var _fiber = item; // 当前要追加的子节点的父级
 
-      while (parentFiber.tag === "class_component") {
+      var parentFiber = item.parent;
+      /**
+       * 找到普通节点父级 排除组件父级
+       * 因为组件父级是不能直接追加真实DOM节点的
+       */
+
+      while (parentFiber.tag === "class_component" || parentFiber.tag === "function_component") {
         parentFiber = parentFiber.parent;
-      }
+      } // 如果子节点是普通节点 找到父级 将子节点追加到父级中
+
 
       if (_fiber.tag === "host_component") {
         parentFiber.stateNode.appendChild(item.stateNode);
@@ -595,6 +612,8 @@ var executeTask = function executeTask(fiber) {
   // 构建子级fiber对象
   if (fiber.tag === "class_component") {
     reconcileChildren(fiber, fiber.stateNode.render());
+  } else if (fiber.tag === "function_component") {
+    reconcileChildren(fiber, fiber.stateNode(fiber.props));
   } else {
     reconcileChildren(fiber, fiber.props.children);
   }

@@ -8,11 +8,21 @@ let pendingCommit = null
 const commitAllWork = fiber => {
   fiber.effects.forEach(item => {
     if (item.effectTag === "placement") {
+      // 当前要追加的子节点
       let fiber = item
+      // 当前要追加的子节点的父级
       let parentFiber = item.parent
-      while (parentFiber.tag === "class_component") {
+      /**
+       * 找到普通节点父级 排除组件父级
+       * 因为组件父级是不能直接追加真实DOM节点的
+       */
+      while (
+        parentFiber.tag === "class_component" ||
+        parentFiber.tag === "function_component"
+      ) {
         parentFiber = parentFiber.parent
       }
+      // 如果子节点是普通节点 找到父级 将子节点追加到父级中
       if (fiber.tag === "host_component") {
         parentFiber.stateNode.appendChild(item.stateNode)
       }
@@ -76,6 +86,8 @@ const executeTask = fiber => {
   // 构建子级fiber对象
   if (fiber.tag === "class_component") {
     reconcileChildren(fiber, fiber.stateNode.render())
+  } else if (fiber.tag === "function_component") {
+    reconcileChildren(fiber, fiber.stateNode(fiber.props))
   } else {
     reconcileChildren(fiber, fiber.props.children)
   }
