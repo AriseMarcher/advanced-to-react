@@ -157,11 +157,25 @@ __webpack_require__.r(__webpack_exports__);
 var CreateTaskQueue = function CreateTaskQueue() {
   var taskQueue = [];
   return {
+    /**
+     * 向任务队列中添加任务
+     */
     push: function push(item) {
       return taskQueue.push(item);
     },
+
+    /**
+     * 从任务队列中获取任务
+     */
     pop: function pop() {
       return taskQueue.shift();
+    },
+
+    /**
+     * 判断任务队列中是否还有认为
+     */
+    isEmpty: function isEmpty() {
+      return taskQueue.length === 0;
     }
   };
 };
@@ -218,8 +232,46 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony import */ var _Misc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Misc */ "./src/react/Misc/index.js");
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+
 
 var taskQueue = Object(_Misc__WEBPACK_IMPORTED_MODULE_0__["CreateTaskQueue"])();
+var subTask = null;
+
+var getFirstTask = function getFirstTask() {};
+
+var executeTask = function executeTask(fiber) {};
+
+var workLoop = function workLoop(deadline) {
+  // 如果子任务不存在 就去获取子任务
+  if (!subTask) {
+    getFirstTask(), _readOnlyError("subTask");
+  }
+  /**
+   * 如果任务存在并且浏览器有空余时间就调用
+   * executeTask 方法执行任务 接受任务 返回新的任务
+   */
+
+
+  while (subTask && deadline.timeRemaining() > 1) {
+    executeTask(subTask), _readOnlyError("subTask");
+  }
+};
+
+var performTask = function performTask(deadline) {
+  // 执行任务
+  workLoop(deadline);
+  /**
+   * 判断任务是否存在
+   * 判断任务队列中是否还有任务没有执行
+   * 再一次告诉浏览器在空闲的时间执行任务
+   */
+
+  if (subTask || taskQueue.isEmpty) {
+    requestIdleCallback(performTask);
+  }
+};
+
 var render = function render(element, dom) {
   /**
    * 1. 向任务队列中添加任务
@@ -235,6 +287,11 @@ var render = function render(element, dom) {
       children: element
     }
   });
+  /**
+   * 指定在浏览器空闲的时间执行任务
+   */
+
+  requestIdleCallback(performTask);
   console.log(taskQueue.pop());
 };
 
