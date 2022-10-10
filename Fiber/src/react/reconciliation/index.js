@@ -6,10 +6,16 @@ let subTask = null
 let pendingCommit = null
 
 const commitAllWork = fiber => {
-  console.log(fiber.effects)
   fiber.effects.forEach(item => {
     if (item.effectTag === "placement") {
-      item.parent.stateNode.appendChild(item.stateNode)
+      let fiber = item
+      let parentFiber = item.parent
+      while (parentFiber.tag === "class_component") {
+        parentFiber = parentFiber.parent
+      }
+      if (fiber.tag === "host_component") {
+        parentFiber.stateNode.appendChild(item.stateNode)
+      }
     }
   })
 }
@@ -53,6 +59,8 @@ const reconcileChildren = (fiber, children) => {
 
     newFiber.stateNode = createStateNode(newFiber)
 
+    console.log(newFiber)
+
     if (index === 0) {
       fiber.child = newFiber
     } else {
@@ -66,7 +74,11 @@ const reconcileChildren = (fiber, children) => {
 
 const executeTask = fiber => {
   // 构建子级fiber对象
-  reconcileChildren(fiber, fiber.props.children)
+  if (fiber.tag === "class_component") {
+    reconcileChildren(fiber, fiber.stateNode.render())
+  } else {
+    reconcileChildren(fiber, fiber.props.children)
+  }
   if (fiber.child) {
     return fiber.child
   }
