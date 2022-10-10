@@ -1,21 +1,32 @@
 import createDomElement from './createDOMElement'
+import diffComponent from './diffComponent'
 import mountElement from './mountElement'
 import unmountNode from './unmountNode'
 import updateNodeElement from './updateNodeElement'
 import updateTextNode from './updateTextNode'
 
 export default function diff (virtualDOM, container, oldDOM) {
-  
   const oldVirtualDOM = oldDOM && oldDOM._virtualDOM
+  const oldComponent = oldVirtualDOM && oldVirtualDOM.component
+
   // 判断 oldDOM 是否存在
   if (!oldDOM) {
     mountElement(virtualDOM, container)
-  } else if (virtualDOM.type !== oldVirtualDOM.type && typeof virtualDOM !== 'function') {
+  } else if (typeof virtualDOM.type === 'function') {
+    // 组件对比
+    diffComponent(virtualDOM, oldComponent, oldDOM, container)
+  } else if (
+    virtualDOM.type !== oldVirtualDOM.type &&
+    typeof virtualDOM !== 'function'
+  ) {
     // 使用virtualDOM创建方法
     
     const newElement = createDomElement(virtualDOM)
     oldDOM.parentNode.replaceChild(newElement, oldDOM)
-  } else if (oldVirtualDOM && virtualDOM.type === oldVirtualDOM.type) {
+  }  else if (
+    oldVirtualDOM &&
+    virtualDOM.type === oldVirtualDOM.type
+    ) {
     if (virtualDOM.type === "text") {
       // 更新内容
       updateTextNode(virtualDOM, oldVirtualDOM, oldDOM)

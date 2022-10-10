@@ -2,7 +2,7 @@ import isFunction from "./isFunction";
 import isFunctionComponent from "./isFunctionComponent";
 import mountNativeElement from "./mountNativeElement";
 
-export default function mountComponent(virtualDOM, container) {
+export default function mountComponent(virtualDOM, container, oldDOM) {
   let nextVirtualDOM = null
 
   // 判断组件是类组件还是函数组件
@@ -16,10 +16,10 @@ export default function mountComponent(virtualDOM, container) {
   
   // 判断类组件或函数组件的第一层还是类组件或函数组件
   if (isFunction(nextVirtualDOM)) {
-    mountComponent(nextVirtualDOM, container)
+    mountComponent(nextVirtualDOM, container, oldDOM)
   } else {
     // 类组件或函数组件的virtualDOM第一层都是普通元素走这里
-    mountNativeElement(nextVirtualDOM, container)
+    mountNativeElement(nextVirtualDOM, container, oldDOM)
   }
 }
 

@@ -14,7 +14,6 @@ export default class Component {
 
     // 获取旧的 virtualDOM 对象 进行对比
     let oldDOM = this.getDOM()
-    console.log(oldDOM)
 
     // 获取容器
     let container = oldDOM.parentNode
