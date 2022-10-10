@@ -5,7 +5,6 @@ const jsx = (
   <div>
     <p>
       Hello React
-      <p>Hello React Child</p>
     </p>
     <p>Hello Fiber</p>
   </div>
@@ -21,9 +20,22 @@ class Greeting extends Component {
   }
 }
 
-// render(jsx, root)
+render(jsx, root)
 
-render(<Greeting title="This is great" />, root)
+setTimeout(() => {
+  console.log('1231')
+  const jsx = (
+    <div>
+      <div>
+        Hello 奥里给
+      </div>
+      <p>Hello Fiber</p>
+    </div>
+  )
+  render(jsx, root)
+}, 2000)
+
+// render(<Greeting title="This is great" />, root)
 
 // function FnComponent (props) {
 //   return <div>
