@@ -472,9 +472,11 @@ var executeTask = function executeTask(fiber) {
     return fiber.child;
   }
 
-  var currentExecutelyFiber = fiber;
+  var currentExecutelyFiber = fiber; // 构建其他节点
 
   while (currentExecutelyFiber.parent) {
+    currentExecutelyFiber.parent.effects = currentExecutelyFiber.parent.effects.concat(currentExecutelyFiber.effects.concat([currentExecutelyFiber]));
+
     if (currentExecutelyFiber.sibling) {
       return currentExecutelyFiber.sibling;
     }
