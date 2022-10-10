@@ -145,6 +145,23 @@ function createElement(type, props) {
 
 /***/ }),
 
+/***/ "./src/react/Misc/Arrified/index.js":
+/*!******************************************!*\
+  !*** ./src/react/Misc/Arrified/index.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var arrified = function arrified(arg) {
+  return Array.isArray(arg) ? arg : [arg];
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (arrified);
+
+/***/ }),
+
 /***/ "./src/react/Misc/CreateTaskQueue/index.js":
 /*!*************************************************!*\
   !*** ./src/react/Misc/CreateTaskQueue/index.js ***!
@@ -188,13 +205,17 @@ var CreateTaskQueue = function CreateTaskQueue() {
 /*!*********************************!*\
   !*** ./src/react/Misc/index.js ***!
   \*********************************/
-/*! exports provided: CreateTaskQueue */
+/*! exports provided: CreateTaskQueue, arrified */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CreateTaskQueue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateTaskQueue */ "./src/react/Misc/CreateTaskQueue/index.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CreateTaskQueue", function() { return _CreateTaskQueue__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _Arrified__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Arrified */ "./src/react/Misc/Arrified/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "arrified", function() { return _Arrified__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
 
 
 
@@ -250,7 +271,45 @@ var getFirstTask = function getFirstTask() {
   };
 };
 
-var executeTask = function executeTask(fiber) {};
+var reconcileChildren = function reconcileChildren(fiber, children) {
+  /**
+   * children 可能是对象 也可能是数组
+   * 将 children 转换成数组
+   */
+  var arrifiedChildren = Object(_Misc__WEBPACK_IMPORTED_MODULE_0__["arrified"])(children);
+  var index = 0;
+  var numberOfElement = arrifiedChildren.length;
+  var element = null;
+  var newFiber = null;
+  var prevFiber = null;
+
+  while (index < numberOfElement) {
+    element = arrifiedChildren[index];
+    newFiber = {
+      type: element.type,
+      props: element.props,
+      tag: "host_component",
+      effects: [],
+      effectTag: "placement",
+      stateNode: null,
+      parent: fiber
+    };
+
+    if (index === 0) {
+      fiber.child = newFiber;
+    } else {
+      prevFiber.sibling = newFiber;
+    }
+
+    prevFiber = newFiber;
+    index++;
+  }
+};
+
+var executeTask = function executeTask(fiber) {
+  reconcileChildren(fiber, fiber.props.children);
+  console.log(fiber);
+};
 
 var workLoop = function workLoop(deadline) {
   // 如果子任务不存在 就去获取子任务
