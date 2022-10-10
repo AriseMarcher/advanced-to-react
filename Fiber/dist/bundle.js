@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./react */ "./src/react/index.js");
 
 var root = document.getElementById("root");
-var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello React"), /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
+var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello React", /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello React Child")), /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
 Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])(jsx, root);
 
 /***/ }),
@@ -415,6 +415,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var taskQueue = Object(_Misc__WEBPACK_IMPORTED_MODULE_0__["CreateTaskQueue"])();
 var subTask = null;
+var pendingCommit = null;
+
+var commitAllWork = function commitAllWork(fiber) {
+  console.log(fiber.effects);
+  fiber.effects.forEach(function (item) {
+    if (item.effectTag === "placement") {
+      item.parent.stateNode.appendChild(item.stateNode);
+    }
+  });
+};
 
 var getFirstTask = function getFirstTask() {
   // 从任务队列中获取任务
@@ -484,7 +494,7 @@ var executeTask = function executeTask(fiber) {
     currentExecutelyFiber = currentExecutelyFiber.parent;
   }
 
-  console.log(fiber);
+  pendingCommit = currentExecutelyFiber;
 };
 
 var workLoop = function workLoop(deadline) {
@@ -500,6 +510,10 @@ var workLoop = function workLoop(deadline) {
 
   while (subTask && deadline.timeRemaining() > 1) {
     subTask = executeTask(subTask);
+  }
+
+  if (pendingCommit) {
+    commitAllWork(pendingCommit);
   }
 };
 
