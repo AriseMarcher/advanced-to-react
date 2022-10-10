@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #box {
+      padding: 20px;
+      background-color: aqua;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <button id="btn1">执行计算任务</button>
+  <button id="btn2">更改背景颜色</button>
+</body>
+<script>
+  var box = document.getElementById("box")
+  var btn1 = document.getElementById("btn1")
+  var btn2 = document.getElementById("btn2")
+  var number = 99999
+  var value = 0
+  console.log(btn1)
+  function calc (deadline) {
+    // 大于毫秒
+    while (number > 0 && deadline.timeRemaining() > 1) {
+      value = Math.random() < 0.5 ? Math.random() : Math.random()
+      console.log(value)
+      number--
+    }
+    // 会被优先级更高的任务终止了 会继续执行
+    requestIdleCallback(calc)
+  }
+
+  btn1.onclick = function () {
+    requestIdleCallback(calc)
+  }
+
+  btn2.onclick = function () {
+    box.style.background = 'green'
+  }
+</script>
+</html>
