@@ -333,11 +333,30 @@ var CreateTaskQueue = function CreateTaskQueue() {
 
 /***/ }),
 
+/***/ "./src/react/Misc/GetTag/index.js":
+/*!****************************************!*\
+  !*** ./src/react/Misc/GetTag/index.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var getTag = function getTag(vdom) {
+  if (typeof vdom.type === "string") {
+    return "host_component";
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (getTag);
+
+/***/ }),
+
 /***/ "./src/react/Misc/index.js":
 /*!*********************************!*\
   !*** ./src/react/Misc/index.js ***!
   \*********************************/
-/*! exports provided: CreateTaskQueue, arrified, createStateNode */
+/*! exports provided: CreateTaskQueue, arrified, createStateNode, getTag */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -350,6 +369,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _CreateStateNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateStateNode */ "./src/react/Misc/CreateStateNode/index.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createStateNode", function() { return _CreateStateNode__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _GetTag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GetTag */ "./src/react/Misc/GetTag/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getTag", function() { return _GetTag__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
 
 
 
@@ -424,7 +447,7 @@ var reconcileChildren = function reconcileChildren(fiber, children) {
     newFiber = {
       type: element.type,
       props: element.props,
-      tag: "host_component",
+      tag: Object(_Misc__WEBPACK_IMPORTED_MODULE_0__["getTag"])(element),
       effects: [],
       effectTag: "placement",
       parent: fiber
