@@ -146,7 +146,7 @@ var Greeting = /*#__PURE__*/function (_Component) {
 Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])(jsx, root);
 setTimeout(function () {
   console.log('1231');
-  var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, "Hello \u5965\u91CC\u7ED9"), /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
+  var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
   Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])(jsx, root);
 }, 2000); // render(<Greeting title="This is great" />, root)
 // function FnComponent (props) {
@@ -561,6 +561,10 @@ var commitAllWork = function commitAllWork(fiber) {
    */
 
   fiber.effects.forEach(function (item) {
+    if (item.effectTag === "delete") {
+      item.parent.stateNode.removeChild(item.stateNode);
+    }
+
     if (item.effectTag === "update") {
       // 更新
       if (item.type === item.alternate.type) {
@@ -631,10 +635,14 @@ var reconcileChildren = function reconcileChildren(fiber, children) {
     alternate = fiber.alternate.child;
   }
 
-  while (index < numberOfElement) {
+  while (index < numberOfElement || alternate) {
     element = arrifiedChildren[index];
 
-    if (element && alternate) {
+    if (!element && alternate) {
+      // 删除操作
+      alternate.effectTag = "delete";
+      fiber.effects.push(alternate);
+    } else if (element && alternate) {
       newFiber = {
         type: element.type,
         props: element.props,
@@ -667,7 +675,7 @@ var reconcileChildren = function reconcileChildren(fiber, children) {
 
     if (index === 0) {
       fiber.child = newFiber;
-    } else {
+    } else if (element) {
       prevFiber.sibling = newFiber;
     }
 

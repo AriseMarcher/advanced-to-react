@@ -26,9 +26,6 @@ setTimeout(() => {
   console.log('1231')
   const jsx = (
     <div>
-      <div>
-        Hello 奥里给
-      </div>
       <p>Hello Fiber</p>
     </div>
   )

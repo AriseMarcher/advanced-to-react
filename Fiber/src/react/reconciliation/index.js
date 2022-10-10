@@ -12,7 +12,9 @@ const commitAllWork = fiber => {
    * 循环 effects 数组构建 DOM 节点树
    */
   fiber.effects.forEach(item => {
-    if (item.effectTag === "update") {
+    if (item.effectTag === "delete") {
+      item.parent.stateNode.removeChild(item.stateNode)
+    } if (item.effectTag === "update") {
       // 更新
       if (item.type === item.alternate.type) {
         // 节点类型相同
@@ -86,10 +88,14 @@ const reconcileChildren = (fiber, children) => {
     alternate = fiber.alternate.child
   }
 
-  while (index < numberOfElement) {
+  while (index < numberOfElement || alternate) {
     element = arrifiedChildren[index]
 
-    if (element && alternate) {
+    if (!element && alternate) {
+      // 删除操作
+      alternate.effectTag = "delete"
+      fiber.effects.push(alternate)
+    } else if (element && alternate) {
       newFiber = {
         type: element.type,
         props: element.props,
@@ -122,7 +128,7 @@ const reconcileChildren = (fiber, children) => {
 
     if (index === 0) {
       fiber.child = newFiber
-    } else {
+    } else if (element) {
       prevFiber.sibling = newFiber
     }
 
