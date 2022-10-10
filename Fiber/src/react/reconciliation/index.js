@@ -1,20 +1,31 @@
 import { CreateTaskQueue } from "../Misc"
 
 const taskQueue = CreateTaskQueue()
-const subTask = null
+let subTask = null
 
 const getFirstTask = () => {
-
+  // 从任务队列中获取任务
+  const task = taskQueue.pop()
+  console.log(task)
+  // 返回最外层节点的 fiber 对象
+  return {
+    props: task.props,
+    stateNode: task.dom,
+    tag: "host_root",
+    effects: [],
+    child: null
+  }
 }
 
 const executeTask = fiber => {
-  
+
 }
 
 const workLoop = deadline => {
   // 如果子任务不存在 就去获取子任务
   if (!subTask) {
     subTask = getFirstTask()
+    console.log(subTask)
   }
 
   /**
@@ -36,9 +47,9 @@ const performTask = deadline => {
    * 判断任务队列中是否还有任务没有执行
    * 再一次告诉浏览器在空闲的时间执行任务
    */
-  if (subTask || taskQueue.isEmpty) {
-    requestIdleCallback(performTask)
-  }
+  // if (subTask || taskQueue.isEmpty) {
+  //   requestIdleCallback(performTask)
+  // }
 }
 
 export const render = (element, dom) => {
@@ -60,5 +71,4 @@ export const render = (element, dom) => {
    * 指定在浏览器空闲的时间执行任务
    */
   requestIdleCallback(performTask)
-  console.log(taskQueue.pop())
 }
