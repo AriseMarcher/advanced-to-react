@@ -119,8 +119,14 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var root = document.getElementById("root");
-var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello React"), /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
+var root = document.getElementById("root"); // const jsx = (
+//   <div>
+//     <p>
+//       Hello React
+//     </p>
+//     <p>Hello Fiber</p>
+//   </div>
+// )
 
 var Greeting = /*#__PURE__*/function (_Component) {
   _inherits(Greeting, _Component);
@@ -128,28 +134,48 @@ var Greeting = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Greeting);
 
   function Greeting(props) {
+    var _this;
+
     _classCallCheck(this, Greeting);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      name: "张三"
+    };
+    return _this;
   }
 
   _createClass(Greeting, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, "Hello Greeting ", this.props.title);
+      var _this2 = this;
+
+      return /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, "Hello Greeting", this.props.title, " -- ", this.state.name, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("button", {
+        onClick: function onClick() {
+          return _this2.setState({
+            name: "李四"
+          });
+        }
+      }, "\u6309\u94AE"));
     }
   }]);
 
   return Greeting;
-}(_react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(_react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // render(jsx, root)
+// setTimeout(() => {
+//   console.log('1231')
+//   const jsx = (
+//     <div>
+//       <p>Hello Fiber</p>
+//     </div>
+//   )
+//   render(jsx, root)
+// }, 2000)
 
-Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])(jsx, root);
-setTimeout(function () {
-  console.log('1231');
-  var jsx = /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("div", null, /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement("p", null, "Hello Fiber"));
-  Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])(jsx, root);
-}, 2000); // render(<Greeting title="This is great" />, root)
-// function FnComponent (props) {
+
+Object(_react__WEBPACK_IMPORTED_MODULE_0__["render"])( /*#__PURE__*/_react__WEBPACK_IMPORTED_MODULE_0__["default"].createElement(Greeting, {
+  title: "This is great"
+}), root); // function FnComponent (props) {
 //   return <div>
 //     FnComponent
 //     {props.title}
@@ -169,17 +195,30 @@ setTimeout(function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return Component; });
+/* harmony import */ var _reconciliation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../reconciliation */ "./src/react/reconciliation/index.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Component = /*#__PURE__*/_createClass(function Component(props) {
-  _classCallCheck(this, Component);
+var Component = /*#__PURE__*/function () {
+  function Component(props) {
+    _classCallCheck(this, Component);
 
-  this.props = props;
-});
+    this.props = props;
+  }
+
+  _createClass(Component, [{
+    key: "setState",
+    value: function setState(partialState) {
+      Object(_reconciliation__WEBPACK_IMPORTED_MODULE_0__["scheduleUpdate"])(this, partialState);
+    }
+  }]);
+
+  return Component;
+}();
 
 /***/ }),
 
@@ -457,6 +496,29 @@ var CreateTaskQueue = function CreateTaskQueue() {
 
 /***/ }),
 
+/***/ "./src/react/Misc/GetRoot/index.js":
+/*!*****************************************!*\
+  !*** ./src/react/Misc/GetRoot/index.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var getRoot = function getRoot(instance) {
+  var fiber = instance.__fiber;
+
+  while (fiber.parent) {
+    fiber = fiber.parent;
+  }
+
+  return fiber;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (getRoot);
+
+/***/ }),
+
 /***/ "./src/react/Misc/GetTag/index.js":
 /*!****************************************!*\
   !*** ./src/react/Misc/GetTag/index.js ***!
@@ -487,7 +549,7 @@ var getTag = function getTag(vdom) {
 /*!*********************************!*\
   !*** ./src/react/Misc/index.js ***!
   \*********************************/
-/*! exports provided: CreateTaskQueue, arrified, createStateNode, getTag */
+/*! exports provided: CreateTaskQueue, arrified, createStateNode, getTag, getRoot */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -503,6 +565,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _GetTag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GetTag */ "./src/react/Misc/GetTag/index.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getTag", function() { return _GetTag__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _GetRoot__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GetRoot */ "./src/react/Misc/GetRoot/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getRoot", function() { return _GetRoot__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
 
 
 
@@ -540,14 +606,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./src/react/reconciliation/index.js ***!
   \*******************************************/
-/*! exports provided: render */
+/*! exports provided: render, scheduleUpdate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scheduleUpdate", function() { return scheduleUpdate; });
 /* harmony import */ var _DOM__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DOM */ "./src/react/DOM/index.js");
 /* harmony import */ var _Misc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Misc */ "./src/react/Misc/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var taskQueue = Object(_Misc__WEBPACK_IMPORTED_MODULE_1__["CreateTaskQueue"])();
@@ -555,12 +628,14 @@ var subTask = null;
 var pendingCommit = null;
 
 var commitAllWork = function commitAllWork(fiber) {
-  console.log(fiber);
   /**
    * 循环 effects 数组构建 DOM 节点树
    */
-
   fiber.effects.forEach(function (item) {
+    if (item.tag === "class_component") {
+      item.stateNode.__fiber = item;
+    }
+
     if (item.effectTag === "delete") {
       item.parent.stateNode.removeChild(item.stateNode);
     }
@@ -603,7 +678,21 @@ var commitAllWork = function commitAllWork(fiber) {
 
 var getFirstTask = function getFirstTask() {
   // 从任务队列中获取任务
-  var task = taskQueue.pop(); // 返回最外层节点的 fiber 对象
+  var task = taskQueue.pop();
+
+  if (task.from === "class_component") {
+    var root = Object(_Misc__WEBPACK_IMPORTED_MODULE_1__["getRoot"])(task.instance);
+    task.instance.__fiber.partialState = task.partialState;
+    return {
+      props: root.props,
+      stateNode: root.stateNode,
+      tag: "host_root",
+      effects: [],
+      child: null,
+      alternate: root
+    };
+  } // 返回最外层节点的 fiber 对象
+
 
   return {
     props: task.props,
@@ -694,6 +783,10 @@ var reconcileChildren = function reconcileChildren(fiber, children) {
 var executeTask = function executeTask(fiber) {
   // 构建子级fiber对象
   if (fiber.tag === "class_component") {
+    if (fiber.stateNode.__fiber && fiber.stateNode.__fiber.partialState) {
+      fiber.stateNode.state = _objectSpread(_objectSpread({}, fiber.stateNode.state), fiber.stateNode.__fiber.partialState);
+    }
+
     reconcileChildren(fiber, fiber.stateNode.render());
   } else if (fiber.tag === "function_component") {
     reconcileChildren(fiber, fiber.stateNode(fiber.props));
@@ -772,6 +865,14 @@ var render = function render(element, dom) {
    * 指定在浏览器空闲的时间执行任务
    */
 
+  requestIdleCallback(performTask);
+};
+var scheduleUpdate = function scheduleUpdate(instance, partialState) {
+  taskQueue.push({
+    from: "class_component",
+    instance: instance,
+    partialState: partialState
+  });
   requestIdleCallback(performTask);
 };
 
