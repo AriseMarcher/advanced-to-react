@@ -14,9 +14,11 @@ export default function mountComponent(virtualDOM, container) {
     nextVirtualDOM = buildClassComponent(virtualDOM)
   }
   
+  // 判断类组件或函数组件的第一层还是类组件或函数组件
   if (isFunction(nextVirtualDOM)) {
     mountComponent(nextVirtualDOM, container)
   } else {
+    // 类组件或函数组件的virtualDOM第一层都是普通元素走这里
     mountNativeElement(nextVirtualDOM, container)
   }
 }
@@ -31,5 +33,8 @@ function buildClassComponent (virtualDOM) {
   // 这样子类又继承自父类，就能通过this.props拿到父类中的属性和方法了
   const component = new virtualDOM.type(virtualDOM.props || {})
   const nextVirtualDOM = component.render()
+
+  // 存储类的实例对象
+  nextVirtualDOM.component = component
   return nextVirtualDOM
 }

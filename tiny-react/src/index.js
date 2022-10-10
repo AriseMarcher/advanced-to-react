@@ -55,12 +55,12 @@ const modifyDOM = (
   </div>
 )
 
-setTimeout(() => {
-  TinyReact.render(modifyDOM, root)
-}, 3000)
+// setTimeout(() => {
+//   TinyReact.render(modifyDOM, root)
+// }, 3000)
 
 // 将virtual对象转换成真实Dom对象
-TinyReact.render(virtualDOM, root)
+// TinyReact.render(virtualDOM, root)
 
 // function Heart (props) {
 //   return (
@@ -78,19 +78,33 @@ TinyReact.render(virtualDOM, root)
 //   return <div>这是Demo</div>
 // }
 
-// class Alert extends TinyReact.Component {
-//   constructor (props) {
-//     super(props)
-//   }
+class Alert extends TinyReact.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      title: "Default Title"
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
 
-//   render () {
-//     return <div>
-//       <p>姓名：{this.props.name}</p>
-//       <p>年龄：{this.props.age}</p>
-//     </div>
-//   }
-// }
+  handleClick() {
+    this.setState({
+      title: "Changed Title"
+    })
+  }
+
+  render () {
+    return <div>
+      <p>姓名：{this.props.name}</p>
+      <p>年龄：{this.props.age}</p>
+      <div>
+        {this.state.title}
+        <button onClick={this.handleClick}>改变Title</button>
+      </div>
+    </div>
+  }
+}
 
 // TinyReact.render(<Heart title="hello React" />, root)
-// TinyReact.render(<Alert name="张三" age={20} />, root)
+TinyReact.render(<Alert name="张三" age={20} />, root)
 
