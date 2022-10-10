@@ -6,7 +6,6 @@ let subTask = null
 const getFirstTask = () => {
   // 从任务队列中获取任务
   const task = taskQueue.pop()
-  console.log(task)
   // 返回最外层节点的 fiber 对象
   return {
     props: task.props,
@@ -55,7 +54,11 @@ const reconcileChildren = (fiber, children) => {
 }
 
 const executeTask = fiber => {
+  // 构建子级fiber对象
   reconcileChildren(fiber, fiber.props.children)
+  if (fiber.child) {
+    return fiber.child
+  }
   console.log(fiber)
 }
 
@@ -63,7 +66,6 @@ const workLoop = deadline => {
   // 如果子任务不存在 就去获取子任务
   if (!subTask) {
     subTask = getFirstTask()
-    console.log(subTask)
   }
 
   /**
