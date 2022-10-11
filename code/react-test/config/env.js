@@ -91,12 +91,29 @@ function getClientEnvironment(publicUrl) {
       }
     );
   // Stringify all values so we can feed into webpack DefinePlugin
-  const stringified = {
-    'process.env': Object.keys(raw).reduce((env, key) => {
-      env[key] = JSON.stringify(raw[key]);
-      return env;
-    }, {}),
-  };
+  // const stringified = {
+  //   'process.env': Object.keys(raw).reduce((env, key) => {
+  //     env[key] = JSON.stringify(raw[key]);
+  //     return env;
+  //   }, {}),
+  // };
+const stringified = {
+	"process.env": Object.keys(raw).reduce((env, key) => {
+   	env[key] = JSON.stringify(raw[key])
+      return env
+   }, {}),
+   __DEV__: true,
+   SharedArrayBuffer: true,
+   spyOnDev: true,
+   spyOnDevAndProd: true,
+   spyOnProd: true,
+   __PROFILE__: true,
+   __UMD__: true,
+   __EXPERIMENTAL__: true,
+   __VARIANT__: true,
+   gate: true,
+   trustedTypes: true
+ }
 
   return { raw, stringified };
 }
