@@ -429,6 +429,7 @@ module.exports = function (webpackEnv) {
                 ],
                 
                 plugins: [
+                  require.resolve("@babel/plugin-transform-flow-strip-types"),
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
