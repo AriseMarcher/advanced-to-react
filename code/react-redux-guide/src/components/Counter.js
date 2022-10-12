@@ -11,7 +11,7 @@ function Counter ({
 }) {
   return (
     <div>
-      <button onClick={increment_async}>+</button>
+      <button onClick={() => increment_async(20)}>+</button>
       <span>{count}</span>
       <button onClick={() => decrement(5)}>-</button>
     </div>
