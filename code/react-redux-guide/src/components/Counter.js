@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
   a: "b"
 })
 
+// 变更后
 const mapDispatchToProps = dispatch => bindActionCreators(counterActions, dispatch)
 
 // 更变前
