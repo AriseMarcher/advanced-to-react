@@ -7,7 +7,8 @@ function Modal ({
   showStatus,
   isShow,
   isHide,
-  isShow_async
+  isShow_async,
+  show_async
 }) {
   const styles = {
     width: 200,
@@ -22,7 +23,7 @@ function Modal ({
   }
   
   return <div>
-    <button onClick={isShow_async}>显示</button>
+    <button onClick={show_async}>显示</button>
     <button onClick={isHide}>隐藏</button>
     <div style={styles}></div>
   </div>
