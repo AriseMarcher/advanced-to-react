@@ -1,14 +1,12 @@
 import React from "react"
 import { connect } from 'react-redux'
 
-function Counter ({count, dispatch}) {
-  console.log(count)
-  console.log(dispatch)
+function Counter ({count, increment, decrement}) {
   return (
     <div>
-      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={increment}>+</button>
       <span>{count}</span>
-      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <button onClick={decrement}>-</button>
     </div>
   )
 }
@@ -17,10 +15,20 @@ function Counter ({count, dispatch}) {
 // 2. connect 方法可以让我们获取store中的状态 将状态通过组件的props属性映射给组件
 // 3. connect 方法可以让我们获取dispatch方法
 // 4. connect 第一个参数 函数 state组件当中的状态
+// 4. connect 第二个参数 返回一个对象 定义什么都会映射到props中
 
 const mapStateToProps = state => ({
   count: state.count,
   a: "b"
 })
 
-export default connect(mapStateToProps)(Counter);
+const mapDispatchToProps = dispatch => ({
+  increment () {
+    dispatch({ type: 'increment' })
+  },
+  decrement () {
+    dispatch({ type: 'decrement' })
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
