@@ -13,6 +13,13 @@ function Counter ({count, increment, decrement}) {
   )
 }
 
+/**
+ * react-redux
+ *  Provider 组件 将创建出来的Store放在一个全局组件能够拿到的地方
+ *  connect 方法 订阅store 当store状态发生变化后重新渲染组件
+ */
+
+
 // 1. connect 方法会帮助我们订阅store 当store中的状态发生更改的时候会帮助我们重新渲染组件
 // 2. connect 方法可以让我们获取store中的状态 将状态通过组件的props属性映射给组件
 // 3. connect 方法可以让我们获取dispatch方法
