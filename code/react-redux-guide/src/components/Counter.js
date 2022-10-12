@@ -27,8 +27,7 @@ function Counter ({count, increment, decrement}) {
 // 4. connect 第二个参数 返回一个对象 定义什么都会映射到props中
 
 const mapStateToProps = state => ({
-  count: state.count,
-  a: "b"
+  count: state.counter.count
 })
 
 // 变更后

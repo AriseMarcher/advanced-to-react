@@ -1,22 +1,22 @@
-import { DECREMENT, INCREMENT } from "../const/counter.const"
+import { ISSHOWMODAL, ISHIDEMODAL } from "../const/modal.const"
 
 const initialState = {
-  count: 0
+  showStatus: false
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => {
   switch(action.type) {
-    case INCREMENT:
+    case ISSHOWMODAL:
       return {
         ...state,
-        count: state.count + action.payload,
+        showStatus: true,
       }
-    case DECREMENT:
+    case ISHIDEMODAL:
       return {
         ...state,
-        count: state.count -  action.payload,
-      };
+        showStatus: false,
+      }
     default: 
       return state
   }

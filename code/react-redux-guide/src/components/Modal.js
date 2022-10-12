@@ -24,7 +24,7 @@ function Modal ({ showStatus, isShow, isHide }) {
 }
 
 const mapStateToProps = state => ({
-  showStatus: state.showStatus
+  showStatus: state.modal.showStatus
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(modalActions, dispatch)
