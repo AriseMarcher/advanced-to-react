@@ -1,5 +1,5 @@
 import { takeEvery, put, delay } from 'redux-saga/effects'
-import { increment, increment_async } from '../actions/counter.actions'
+import { increment, increment_async } from '../actions/counter.action'
 import { INCREMENT_ASYNC } from '../const/counter.const'
 
 // takeEvery 接受 action
