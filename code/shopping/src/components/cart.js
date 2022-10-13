@@ -31,7 +31,7 @@ class Cart extends Component {
           carts.map(product => (
             <div className="cart-row" key={product.id}>
               <div className="cart-item cart-column">
-                <img className="cart-item-image" src={product.thumbnail} width="100" height="100" alt='' />
+                <img className="cart-item-image" src={`http://localhost:3005/${product.thumbnail}`} width="100" height="100" alt='' />
                 <span className="cart-item-title">{product.title}</span>
               </div>
               <span className="cart-price cart-column">￥{product.price}</span>
@@ -54,7 +54,11 @@ class Cart extends Component {
       </div>
       <div className="cart-total">
         <strong className="cart-total-title">总价</strong>
-        <span className="cart-total-price">￥39.97</span>
+        <span className="cart-total-price">￥{
+          carts.reduce((total, product) => {
+            return total += product.price * product.count
+          }, 0)
+        }</span>
       </div>
     </section>
   }
