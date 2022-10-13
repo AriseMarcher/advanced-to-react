@@ -142,3 +142,27 @@ function bindActionCreators (actionCreators, dispatch) {
   }
   return boundActionCreators
 }
+
+function combineReducers(reducers) {
+  // 1. 检查 reducer 类型 它必须是函数
+  var reducerKeys = Object.keys(reducers)
+  for (var i = 0; i < reducerKeys.length; i++) {
+    var key = reducerKeys[i]
+    if (typeof reducers[key] !== 'function') {
+      throw new Error('reducer 必须是函数')
+    }
+  }
+  // 2. 调用一个个小的reducer 将每一个小的reducer中返回的状态存储在一个新的大的对象中
+  return function (state, action) {
+    var nextState = {}
+    for (var i = 0; i < reducerKeys.length; i++) {
+      var key = reducerKeys[i]
+      var reducer = reducers[key]
+
+      // 获取 reducer 的状态
+      var previousStateForKey = state[key]
+      nextState[key] = reducer(previousStateForKey, action)
+    }
+    return nextState
+  }
+}

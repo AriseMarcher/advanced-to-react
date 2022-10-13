@@ -34,7 +34,7 @@
       }
     }
   }
-  function reducer (state, action) {
+  function counterReducer (state, action) {
     switch (action.type) {
       case 'increment':
         return state + 1;
@@ -44,13 +44,18 @@
         return state;
     }
   }
+
+  // 将一个个小的reducer组合成一个大的reducer
+  var rootReducer = combineReducers({
+    counter: counterReducer
+  })
+
   // 创建store
-  var store = createStore(reducer, 0, applyMiddleware(logger, thunk))
+  var store = createStore(rootReducer, { counter: 100 }, applyMiddleware(logger, thunk))
   // console.log(store)
 
   // bindActionCreators 是将 actionCreators 转换成可以触发action的函数
   var actions = bindActionCreators({increment, decrement}, store.dispatch)
-  console.log(actions)
   function increment () {
     return { type: 'increment' }
   }
@@ -59,7 +64,8 @@
   }
 
   store.subscribe(function () {
-    document.getElementById('box').innerHTML = store.getState()
+    console.log(store.getState())
+    document.getElementById('box').innerHTML = store.getState().counter
   })
 
   document.getElementById('increment').onclick = function () {
