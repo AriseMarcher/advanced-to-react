@@ -12,6 +12,9 @@
   <button id="decrement">-1</button>
 </body>
 <script src="myRedux.js"></script>
+<script src="middlewares/logger.js"></script>
+<script src="middlewares/thunk.js"></script>
+
 <script>
   function enhancer (createStore) {
     return function (reducer, preloadState) {
@@ -42,7 +45,7 @@
     }
   }
   // 创建store
-  var store = createStore(reducer, 0, enhancer)
+  var store = createStore(reducer, 0, applyMiddleware(logger, thunk))
   console.log(store)
 
   store.subscribe(function () {
@@ -50,12 +53,8 @@
   })
 
   document.getElementById('increment').onclick = function () {
-    // store.dispatch({ type: 'increment' })
-    store.dispatch(function (dispatch) {
-      setTimeout(function() {
-        dispatch({type: 'increment'})
-      }, 1000)
-    })
+    // logger -> thunk -> reducer
+    store.dispatch({ type: 'increment' })
   }
   document.getElementById('decrement').onclick = function () {
     store.dispatch({ type: 'decrement' })
