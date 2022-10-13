@@ -74,8 +74,6 @@ function isPlainObject (obj) {
   return Object.getPrototypeOf(obj) === proto
 }
 
-console.log(isPlainObject([]))
-
 // 中间件其实是对dispatch进行增强，applyMiddleware,
 // 让多个中间件函数进行组合，触发action适合让多个中间件按照顺序进行执行
 
@@ -130,4 +128,17 @@ function compose () {
     }
     return dispatch
   }
+}
+
+function bindActionCreators (actionCreators, dispatch) {
+  var boundActionCreators = {}
+
+  for (var key in actionCreators) {
+    (function (key) {
+      boundActionCreators[key] = function () {
+        dispatch(actionCreators[key]())
+      }
+    })(key)
+  }
+  return boundActionCreators
 }
