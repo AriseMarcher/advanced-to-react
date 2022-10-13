@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions'
-import { addProductToLocalCart } from '../actions/cart.actions'
+import { addProductToLocalCart, saveCarts } from '../actions/cart.actions'
 
 const initialState = []
 
@@ -13,14 +13,19 @@ const handleAddProductToLocalCart = (state, action) => {
   const newId = action.payload.id
   const product = newState.find(product => product.id === newId)
   if (product) {
-    product.count = product.count + 1
+    product.count = Number(product.count) + 1
   } else {
     newState.push(action.payload)
   }
   return newState
 }
 
+// 将服务器端返回的购物车数据同步到本地的购物车中
+const handleSaveCarts = (state, action) => action.payload
+
 export default createReducer({
   // 将商品添加到本地的购物车数据中
-  [addProductToLocalCart]: handleAddProductToLocalCart
+  [addProductToLocalCart]: handleAddProductToLocalCart,
+  // 将服务器端返回的购物车数据同步到本地的购物车中
+  [saveCarts]: handleSaveCarts
 }, initialState)
