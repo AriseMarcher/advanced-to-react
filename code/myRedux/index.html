@@ -13,6 +13,24 @@
 </body>
 <script src="myRedux.js"></script>
 <script>
+  function enhancer (createStore) {
+    return function (reducer, preloadState) {
+      var store = createStore(reducer, preloadState)
+      console.log(store)
+      // 模拟 redux-thunk
+      var dispatch = store.dispatch;
+      function _dispatch (action) {
+        if (typeof action === 'function') {
+          return action(dispatch)
+        }
+        dispatch(action)
+      }
+      return {
+        ...store,
+        dispatch: _dispatch
+      }
+    }
+  }
   function reducer (state, action) {
     switch (action.type) {
       case 'increment':
@@ -24,20 +42,23 @@
     }
   }
   // 创建store
-  var store = createStore(reducer, 0)
-  console.log(store.getState())
+  var store = createStore(reducer, 0, enhancer)
+  console.log(store)
 
   store.subscribe(function () {
     document.getElementById('box').innerHTML = store.getState()
   })
 
   document.getElementById('increment').onclick = function () {
-    store.dispatch({ type: 'increment' })
+    // store.dispatch({ type: 'increment' })
+    store.dispatch(function (dispatch) {
+      setTimeout(function() {
+        dispatch({type: 'increment'})
+      }, 1000)
+    })
   }
   document.getElementById('decrement').onclick = function () {
     store.dispatch({ type: 'decrement' })
   }
-
-  
 </script>
 </html>

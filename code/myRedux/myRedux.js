@@ -4,10 +4,18 @@
  *    getState, dispatch, subscribe
  * }
  */
-function createStore (reducer, preloadedState) {
+function createStore (reducer, preloadedState, enhancer) {
   // 约束 reducer 参数类型
   if (typeof reducer !== 'function') {
     throw new Error('reducer必须是函数')
+  }
+  // 判断 enhancer 是否传递
+  if (typeof enhancer !== 'undefined') {
+    // 判断 enhancer 是否是一个函数
+    if (typeof enhancer !== 'function') {
+      throw new Error('enhancer必须是一个函数')
+    }
+    return enhancer(createStore)(reducer, preloadedState)
   }
 
   // store对象中存储的状态
