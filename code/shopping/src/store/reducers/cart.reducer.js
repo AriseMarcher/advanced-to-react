@@ -1,5 +1,5 @@
 import { handleActions as createReducer } from 'redux-actions'
-import { addProductToLocalCart, saveCarts } from '../actions/cart.actions'
+import { addProductToLocalCart, deleteProductFromLocalCart, saveCarts } from '../actions/cart.actions'
 
 const initialState = []
 
@@ -23,9 +23,20 @@ const handleAddProductToLocalCart = (state, action) => {
 // 将服务器端返回的购物车数据同步到本地的购物车中
 const handleSaveCarts = (state, action) => action.payload
 
+// 删除本地购物车中的商品
+const handleDeleteProductFromLocalCart = (state, action) => {
+  const newState = JSON.parse(JSON.stringify(state))
+  // 需要删除商品的索引
+  const newIndex = action.payload
+  newState.splice(newIndex, 1)
+  return newState
+}
+
 export default createReducer({
   // 将商品添加到本地的购物车数据中
   [addProductToLocalCart]: handleAddProductToLocalCart,
   // 将服务器端返回的购物车数据同步到本地的购物车中
-  [saveCarts]: handleSaveCarts
+  [saveCarts]: handleSaveCarts,
+  // 删除本地购物车中的商品
+  [deleteProductFromLocalCart]: handleDeleteProductFromLocalCart
 }, initialState)
