@@ -1,13 +1,5 @@
-import { DECREMENT, INCREMENT, INCREMENT_ASYNC } from "../const/counter.const"
 
-export const increment = payload => ({ type: INCREMENT, payload })
-export const decrement = payload => ({ type: DECREMENT, payload })
+import { createAction } from 'redux-actions'
 
-// export const increment_async = payload => dispatch => {
-//   setTimeout(() => {
-//     dispatch(increment(payload))
-//   }, 2000)
-// }
-
-// export const increment_async = () => ({ type: INCREMENT_ASYNC })
-export const increment_async = payload => ({ type: INCREMENT_ASYNC, payload })
+export const increment = createAction('increment')
+export const decrement = createAction('decrement')
