@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const TODOS_FEATURE_KEY = 'todos'
+export const TODOS_FEATURE_KEY = 'todos'
 
 const { reducer: TodosReducer, actions } = createSlice({
   name: TODOS_FEATURE_KEY,
