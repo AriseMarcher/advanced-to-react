@@ -4,19 +4,20 @@ import { addTodo, loadTodos, TODOS_FEATURE_KEY } from '../../Store/todos.slice'
 
 function Main() {
   const dispatch = useDispatch()
-  const todos = useSelector(state => state[TODOS_FEATURE_KEY])
-
+  const todos = useSelector(state => state[TODOS_FEATURE_KEY].entities)
   useEffect(() => {
     console.log('this is useEffect')
     dispatch(loadTodos("http://localhost:3001/todos"))
   }, [])
+  console.log(todos)
+  
   return (
     <section className="main">
       <button onClick={() => dispatch(addTodo({title: '测试任务'}))}>
         添加任务
       </button>
       <ul className="todo-list">
-        {todos.map(todo => (
+        {Object.values(todos).map(todo => (
           <li key={todo.id}>
             <div className="view">
               <input className="toggle" type="checkbox" />

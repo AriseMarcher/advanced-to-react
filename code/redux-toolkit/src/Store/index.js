@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import TodosReducer, { TODOS_FEATURE_KEY } from './todos.slice'
 
 export default configureStore({
@@ -6,4 +6,5 @@ export default configureStore({
     [TODOS_FEATURE_KEY]: TodosReducer
   },
   devTools: process.env.NODE_ENV !== "production",
+  middleware: [...getDefaultMiddleware()]
 })
