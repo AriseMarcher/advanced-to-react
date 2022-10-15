@@ -1,8 +1,15 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+  createSelector,
+} from '@reduxjs/toolkit'
 import axios from 'axios'
 export const TODOS_FEATURE_KEY = 'todos'
 
 const todosAdapter = createEntityAdapter({ selectId: todo => todo.cid })
+
+const { selectAll } = todosAdapter.getSelectors()
 
 console.log(todosAdapter.getInitialState())
 export const loadTodos = createAsyncThunk(
@@ -10,6 +17,11 @@ export const loadTodos = createAsyncThunk(
   (payload, thunkAPI) => {
     return axios.get(payload).then(response => response.data)
   }
+)
+
+export const selectTodosList = createSelector(
+  state => state[TODOS_FEATURE_KEY],
+  selectAll
 )
 
 const { reducer: TodosReducer, actions } = createSlice({
