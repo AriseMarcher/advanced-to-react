@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/too
 import axios from 'axios'
 export const TODOS_FEATURE_KEY = 'todos'
 
-const todosAdapter = createEntityAdapter()
+const todosAdapter = createEntityAdapter({ selectId: todo => todo.cid })
+
 console.log(todosAdapter.getInitialState())
 export const loadTodos = createAsyncThunk(
   'todos/loadTodos', // action type的属性值
@@ -20,7 +21,7 @@ const { reducer: TodosReducer, actions } = createSlice({
       prepare: todo => {
         return {
           payload: {
-            id: Math.random(),
+            cid: Math.random(),
             ...todo
           }
         }

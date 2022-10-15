@@ -18,7 +18,7 @@ function Main() {
       </button>
       <ul className="todo-list">
         {Object.values(todos).map(todo => (
-          <li key={todo.id}>
+          <li key={todo.cid}>
             <div className="view">
               <input className="toggle" type="checkbox" />
               <label>{todo.title}</label>
