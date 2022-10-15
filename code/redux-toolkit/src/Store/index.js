@@ -5,5 +5,5 @@ export default configureStore({
   reducer: {
     [TODOS_FEATURE_KEY]: TodosReducer
   },
-  devTools: ProcessingInstruction.env.NODE_ENV !== 'production'
+  devTools: process.env.NODE_ENV !== "production",
 })
