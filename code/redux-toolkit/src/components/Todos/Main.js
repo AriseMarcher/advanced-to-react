@@ -6,12 +6,12 @@ function Main() {
   const todos = useSelector(state => state[TODOS_FEATURE_KEY])
   return (
     <section className="main">
-      <button onClick={() => dispatch(addTodo({id: Math.random(), title: '测试任务'}))}>
+      <button onClick={() => dispatch(addTodo({title: '测试任务'}))}>
         添加任务
       </button>
       <ul className="todo-list">
         {todos.map(todo => (
-          <li key={todo.cid}>
+          <li key={todo.id}>
             <div className="view">
               <input className="toggle" type="checkbox" />
               <label>{todo.title}</label>
