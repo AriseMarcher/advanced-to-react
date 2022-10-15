@@ -16,13 +16,8 @@ const { reducer: TodosReducer, actions } = createSlice({
   initialState: todosAdapter.getInitialState(),
   reducers: {
     addTodo: {
-      reducer: (state, action) => {
-        console.log(action)
-        // state.push(action.payload)
-        todosAdapter.addOne(action.payload)
-      },
+      reducer: todosAdapter.addOne,
       prepare: todo => {
-        console.log('----', todo)
         return {
           payload: {
             id: Math.random(),
@@ -31,17 +26,10 @@ const { reducer: TodosReducer, actions } = createSlice({
         }
       }
     },
-    setTodos: (state, action) => {
-      // action.payload.forEach(todo => state.push(todo))
-      todosAdapter.addMany(state, action.payload)
-    }
+    setTodos: todosAdapter.addMany
   },
   extraReducers: {
-    [loadTodos.fulfilled]: (state, action) => {
-      // action.payload.forEach(todo => state.push(todo))
-      console.log('this is fulfilled')
-      todosAdapter.addMany(state, action.payload)
-    },
+    [loadTodos.fulfilled]: todosAdapter.addMany,
     [loadTodos.pending]: (state, action) => {
       return state
     }
