@@ -5,9 +5,7 @@ export const TODOS_FEATURE_KEY = 'todos'
 export const loadTodos = createAsyncThunk(
   'todos/loadTodos', // action type的属性值
   (payload, thunkAPI) => {
-    axios.get(payload).then(response => {
-      thunkAPI.dispatch(setTodos(response.data))
-    })
+    return axios.get(payload).then(response => response.data)
   }
 )
 
@@ -32,6 +30,15 @@ const { reducer: TodosReducer, actions } = createSlice({
     },
     setTodos: (state, action) => {
       action.payload.forEach(todo => state.push(todo))
+    }
+  },
+  extraReducers: {
+    [loadTodos.fulfilled]: (state, action) => {
+      action.payload.forEach(todo => state.push(todo))
+    },
+    [loadTodos.pending]: (state, action) => {
+      console.log('pedding')
+      return state
     }
   }
 })
