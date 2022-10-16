@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  function onScroll () {
+    console.log('the page is scrolling')
+  }
 
-  // 组件挂载完成之后执行 组件数据更新完成之后
-  // useEffect(() => {
-  //   console.log('111')
-  // })
-
-  // 组件挂载完成之后执行一次 之后不会执行
   useEffect(() => {
-    console.log('222')
+    window.addEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
-  // 组件被卸载之前执行
+  const [count, setCount] = useState(0)
+  
   useEffect(() => {
+    const timer = setInterval(() => {
+      setCount(count => count + 1)
+    }, 1000)
     return () => {
-      console.log('333')
+      clearInterval(timer)
     }
-  })
-
-  return <div className='app'>
+  }, [])
+  return <div>
     <span>{count}</span>
-    <button onClick={() => setCount(count + 1)}>+1</button>
   </div>
 }
 
