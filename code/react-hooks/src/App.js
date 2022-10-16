@@ -1,16 +1,30 @@
-import { createContext, useContext } from 'react'
+import { useEffect, useState } from 'react'
 
-const counterContext = createContext()
+function App() {
+  const [count, setCount] = useState(0)
 
-function App () {
-  return <counterContext.Provider value={100}>
-    <Foo />
-  </counterContext.Provider>
+  // 组件挂载完成之后执行 组件数据更新完成之后
+  // useEffect(() => {
+  //   console.log('111')
+  // })
+
+  // 组件挂载完成之后执行一次 之后不会执行
+  useEffect(() => {
+    console.log('222')
+  }, [])
+
+  // 组件被卸载之前执行
+  useEffect(() => {
+    return () => {
+      console.log('333')
+    }
+  })
+
+  return <div className='app'>
+    <span>{count}</span>
+    <button onClick={() => setCount(count + 1)}>+1</button>
+  </div>
 }
 
-function Foo () {
-  const value = useContext(counterContext)
-  return <div>Foo-{value}</div>
-}
 
 export default App;
