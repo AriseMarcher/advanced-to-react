@@ -1,24 +1,16 @@
-import { useReducer } from 'react'
+import { createContext, useContext } from 'react'
+
+const counterContext = createContext()
 
 function App () {
-  function reducer (state, action) {
-    switch (action.type) {
-      case 'increment':
-        return state + 1;
-      case 'decrement':
-        return state - 1;
-      default:
-        return state;
-    }
-  }
+  return <counterContext.Provider value={100}>
+    <Foo />
+  </counterContext.Provider>
+}
 
-  const [ count, dispatch ] = useReducer(reducer, 0)
-
-  return <div>
-    <button onClick={() => dispatch({ type: 'decrement'})}>-1</button>
-    <span>{count}</span>
-    <button onClick={() => dispatch({ type: 'increment'})}>+1</button>
-  </div>
+function Foo () {
+  const value = useContext(counterContext)
+  return <div>Foo-{value}</div>
 }
 
 export default App;
