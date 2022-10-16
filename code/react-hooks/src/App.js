@@ -1,14 +1,10 @@
-import { useState, memo, useCallback } from 'react'
+import { useRef, useState, memo, useCallback } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const box = useRef()
 
-  const resetCount = useCallback(() => setCount(0), [setCount])
-
-  return <div>
-    <span>{count}</span>
-    <button onClick={() => setCount(count + 1)}>+1</button>
-    <Foo resetCount={resetCount} />
+  return <div ref={box}>
+    <button onClick={() => console.log(box)}>获取DIV</button>
   </div>
 }
 
