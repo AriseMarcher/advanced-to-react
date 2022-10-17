@@ -1,23 +1,29 @@
-import { css, Global } from '@emotion/react'
-import Demo from './Demo';
+import { css, keyframes } from '@emotion/react'
 
-const styles = css`
-  body {
-    margin: 0;
+const move = keyframes`
+  0% {
+    background: skyblue;
+    left: 0;
+    top: 0
   }
-  a {
-    text-decoration: none;
-    color: red;
+  100% {
+    background: red;
+    left: 500px;
+    top: 200px;
   }
 `
 
+const box = css`
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  animation: ${move} 2s ease infinite;
+`
 
 function App() {
   return (
-    <div>
-      <Global styles={styles} />
-      <a href="#">a标签</a>
-      <Demo />
+    <div css={box}>
+      Go
     </div>
   );
 }
