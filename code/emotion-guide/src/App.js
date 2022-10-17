@@ -1,23 +1,15 @@
+import Css from './Css'
 import { css } from '@emotion/react'
 
 const style = css`
-  width: 100px;
-  height: 200px;
-  background: skyblue;
+  background: red;
 `
-
-const style1 = css({
-  width: 100,
-  height: 200,
-  background: 'red'
-})
-
-console.log(style1)
+console.log(style)
 
 function App() {
   return (
-    <div css={style1}>
-      App Page
+    <div>
+      <Css css={style} />
     </div>
   );
 }
