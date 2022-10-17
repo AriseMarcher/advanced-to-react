@@ -1,20 +1,25 @@
-import { lazy, Suspense } from 'react';
-// react-router-dom'是 5 的版本
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
-
-// Suspense 需要和 lazy配合使用
-const Home = lazy(() => import(/* webpackChunkName "Home" */'./Home'))
-const List = lazy(() => import(/* webpackChunkName "List" */'./List'))
+import { lazy, Suspense, useState } from 'react'
+import { BrowserRouter, Switch, Link } from 'react-router-dom'
 
 function App() {
+  let LazyComponent = null
+  const [flag, setFlag] = useState(true)
+
+  if (flag) {
+    LazyComponent = lazy(() => import(/* webpackChunkName "Home" */'./Home'))
+  } else {
+    LazyComponent = lazy(() => import(/* webpackChunkName "List" */'./List'))
+  }
+
   return <BrowserRouter>
     <Link to="/">首页</Link>
     <Link to="/list">列表页面</Link>
+    <button onClick={() => setFlag(flag => !flag)}>简单改变页面</button>
+
 
     <Switch>
       <Suspense fallback={<div>loading...</div>}>
-        <Route path="/" component={Home} exact />
-        <Route patc="/list" component={List} />
+        <LazyComponent />
       </Suspense>
     </Switch>
   </BrowserRouter>
