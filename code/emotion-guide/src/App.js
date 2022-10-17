@@ -1,15 +1,23 @@
-import styled from '@emotion/styled'
+import { css, Global } from '@emotion/react'
+import Demo from './Demo';
 
-const Button = styled.button`
-  color: red;
+const styles = css`
+  body {
+    margin: 0;
+  }
+  a {
+    text-decoration: none;
+    color: red;
+  }
 `
+
 
 function App() {
   return (
     <div>
-      <Button as="a">
-        123
-      </Button>
+      <Global styles={styles} />
+      <a href="#">a标签</a>
+      <Demo />
     </div>
   );
 }
