@@ -1,38 +1,23 @@
-import { useEffect, useState, memo } from 'react'
+import { lazy, Suspense } from 'react';
+// react-router-dom'是 5 的版本
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
-function compare (prevProps, nextProps) {
-  if (
-    prevProps.person.name !== nextProps.person.name ||
-    prevProps.person.age !== nextProps.person.age
-  ) {
-    // false 表示需要重新渲染
-    return false
-  }
-  // true 表示不需要重新渲染 跟 shouldComponentUpdate相反
-  return true
-}
-
-const ShowName = memo(function ({person}) {
-  console.log('is Update?')
-  return <div>{person.name} -- {person.age}</div>
-}, compare)
+// Suspense 需要和 lazy配合使用
+const Home = lazy(() => import(/* webpackChunkName "Home" */'./Home'))
+const List = lazy(() => import(/* webpackChunkName "List" */'./List'))
 
 function App() {
-  const [person, setPerson] = useState(({
-    name: '张三',
-    age: 20,
-    job: 'waiter'
-  }))
+  return <BrowserRouter>
+    <Link to="/">首页</Link>
+    <Link to="/list">列表页面</Link>
 
-  useEffect(() => {
-    setInterval(() => {
-      setPerson({...person, job: 'teacher'})
-    }, 1000)
-  }, [])
-
-  return <div>
-    <ShowName person={person} />
-  </div>
+    <Switch>
+      <Suspense fallback={<div>loading...</div>}>
+        <Route path="/" component={Home} exact />
+        <Route patc="/list" component={List} />
+      </Suspense>
+    </Switch>
+  </BrowserRouter>
 }
 
 export default App;
