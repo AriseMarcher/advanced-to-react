@@ -1,22 +1,24 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+function useGetPost () {
+  const [post, setPost ] = useState({})
+  useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/posts/1')
+      .then(response => {
+        setPost(response.data)
+      })
+  }, [])
+  return [post, setPost]
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-  let timer = useRef();
-  useEffect(() => {
-    // 会触发组件重新渲染 不能直接把timer设置成Null
-    timer.current = setInterval(() => {
-      setCount(count => count + 1)
-    }, 1000)
-  }, [])
-  const stopCount = () => {
-    console.log(timer)
-    clearInterval(timer.current)
-  }
+  const [post, setPost] = useGetPost()
 
   return <div>
-    {count}
-    <button onClick={stopCount}>Stop increment</button>
+    <div>{post.title}</div>
+    <br />
+    <div>{post.body}</div>
   </div>
 }
 
