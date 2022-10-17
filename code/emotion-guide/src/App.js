@@ -1,15 +1,26 @@
-import Css from './Css'
-import { css } from '@emotion/react'
+import styled from '@emotion/styled'
 
-const style = css`
-  background: red;
+const Button = styled.button`
+  width: 100px;
+  height: 30px;
+  background: #fff;
 `
-console.log(style)
+
+const Container = styled.div({
+  width: 1000,
+  height: 500,
+  border: '1px solid #eee',
+  margin: '0 auto',
+  background: '#eee',
+})
 
 function App() {
   return (
     <div>
-      <Css css={style} />
+      <Container>
+        <Button>按钮</Button>
+
+      </Container>
     </div>
   );
 }
