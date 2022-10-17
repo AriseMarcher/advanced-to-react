@@ -1,23 +1,31 @@
 import styled from '@emotion/styled'
 
-function Demo ({className}) {
-  return <div className={className}>Demo</div>
-}
+// const Child = styled.div`
+//   color: red
+// `
 
-const Fancy = styled(Demo)`
-  color: red;
-`
+// const Parent = styled.div`
+//   ${Child} {
+//     color: blue
+//   }
+// `
 
-const Orange = styled(Demo)({
-  background: 'orange',
-  color: 'white'
+const Child = styled.div({
+  color: 'red'
 })
 
+const Parent = styled.div({
+  [Child]: {
+    color: 'blue'
+  }
+})
 function App() {
   return (
     <div>
-      <Fancy />
-      <Orange />
+      <Parent>
+        <Child>123</Child>
+        456
+      </Parent>
     </div>
   );
 }
