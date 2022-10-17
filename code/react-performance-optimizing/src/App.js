@@ -1,23 +1,10 @@
 import { Component } from 'react'
 class App extends Component {
-  constructor () {
-    super()
-    this.state = {
-      inputValue: ''
-    }
-  }
-
-  setInputValue = e => {
-    this.setState({ inputValue: e.target.value })
-  }
+  handleClick = () => console.log(this)
 
   render () {
-    return (
-      <input
-        value={this.state.inputValue}
-        onChange={this.setInputValue}
-      />
-    )
+    // throw new Error('some error')
+    return <button onClick={this.handleClick}>按钮</button>
   }
 }
 
