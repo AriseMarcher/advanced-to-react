@@ -1,23 +1,15 @@
 import styled from '@emotion/styled'
 
-const Container = styled.div`
-  width: 200px;
-  height: 200px;
-  background: skyblue;
-  &:hover {
-    background: red;
-  }
-  & > span {
-    color: yellow;
-  }
+const Button = styled.button`
+  color: red;
 `
 
 function App() {
   return (
     <div>
-      <Container>
-        <span>123</span>
-      </Container>
+      <Button as="a">
+        123
+      </Button>
     </div>
   );
 }
