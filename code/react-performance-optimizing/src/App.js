@@ -1,11 +1,8 @@
-import { Component } from 'react'
-class App extends Component {
-  handleClick = () => console.log(this)
+import _ from 'lodash'
 
-  render () {
-    // throw new Error('some error')
-    return <button onClick={this.handleClick}>按钮</button>
-  }
+function App () {
+  console.log(_.chunk(['a', 'b', 'c', 'd'], 2))
+  return <div>App</div>
 }
 
 export default App;
