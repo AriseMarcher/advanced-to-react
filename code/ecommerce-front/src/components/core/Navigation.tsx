@@ -15,6 +15,8 @@ const Navigation = () => {
   const isHome = useActive(pathname, "/")
   const isShop = useActive(pathname, "/shop")
 
+  console.log('test')
+
   return (
     <Menu mode='horizontal' selectable={false}>
       <Menu.Item className={isHome}>
