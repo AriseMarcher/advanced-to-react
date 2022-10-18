@@ -1,11 +1,15 @@
 import React from 'react'
+import Navigation from './Navigation'
 interface Props {
   children: React.ReactNode
 }
 
 const Layout: React.FC<Props> = ({children}) => {
   return (
-    <div>{children}</div>
+    <div>
+      <Navigation />
+      {children}
+    </div>
   )
 }
 
