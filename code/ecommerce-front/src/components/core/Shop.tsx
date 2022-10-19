@@ -6,7 +6,7 @@ const Shop = () => {
   const state = useSelector(state => state)
   console.log(state)
   return (
-    <Layout>Shop</Layout>
+    <Layout title='商城' subTitle='挑选你喜欢的商品'>Shop</Layout>
   )
 }
 

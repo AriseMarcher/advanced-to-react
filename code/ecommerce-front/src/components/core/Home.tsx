@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 const Home = () => {
   const state = useSelector(state => state)
   return (
-    <Layout>Home</Layout>
+    <Layout title="首页" subTitle='尽情驰骋吧'>Home</Layout>
   )
 }
 
