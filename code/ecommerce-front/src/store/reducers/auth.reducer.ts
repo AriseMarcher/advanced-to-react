@@ -4,13 +4,15 @@ export interface AuthState {
   signup: {
     loaded: boolean,
     success: boolean,
+    message: string
   }
 }
 
 const intialState = {
   signup: {
     loaded: false,
-    success: false
+    success: false,
+    message: ''
   }
 }
 
@@ -18,6 +20,7 @@ export default function authReducer (
   state = intialState,
   action: AuthUnionType
 ) {
+  console.log(action)
   switch (action.type) {
     case SIGNUP:
       return {
@@ -40,7 +43,7 @@ export default function authReducer (
         ...state,
         signup: {
           loaded: true,
-          success: true,
+          success: false,
           message: (action as SignupFailAction).message
         }
       }
