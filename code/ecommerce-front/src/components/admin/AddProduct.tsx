@@ -29,7 +29,6 @@ const AddProduct = () => {
     if (typeof file !== 'undefined') {
       formData.set('photo', file)
     }
-    console.log(formData)
 
     axios.post(`${API}/product/create/${user._id}`, formData, {
       headers: {
@@ -74,7 +73,7 @@ const AddProduct = () => {
             <Select.Option value="">请选择分类</Select.Option>
             {
               category.category.result.map(item => (
-                <Select.Option value={item._id}>{item.name}</Select.Option>
+                <Select.Option key={item._id} value={item._id}>{item.name}</Select.Option>
               ))
             }
           </Select>
