@@ -20,7 +20,7 @@ export interface GetProductSuccessAction {
 export const getProduct = (
   sortBy: string,
   order: string = "desc",
-  limit: number = 5
+  limit: number = 10
 ): GetProductAction => ({
   type: GET_PRODUCT,
   sortBy,

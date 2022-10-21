@@ -1,6 +1,7 @@
-import { Typography, Button, Card, Row, Col } from 'antd'
+import { Typography, Button, Card, Row, Col, Image } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { API } from '../../config';
 import { Product } from '../../models/product';
 
 const { Title, Paragraph } = Typography;
@@ -12,7 +13,9 @@ interface Props {
 const ProductItem: React.FC<Props> = ({product}) => {
   return (
     <Card
-      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+      cover={
+        <Image src={`${API}/product/photo/${product._id}`} alt={product.name} />
+      }
       actions={[
         <Button type="link">
           <Link to="">查看详情</Link>

@@ -36,9 +36,9 @@ export default function productReducer (
       return {
         ...state,
         [action.sortBy]: {
+          ...state[action.sortBy === "createdAt" ? "createdAt" : "sold"],
           loaded: false,
           success: false,
-          products: []
         }
       }
     case GET_PRODUCT_SUCCESS:
