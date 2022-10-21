@@ -8,7 +8,7 @@ function* handleGetProduct ({ sortBy, order, limit}: GetProductAction): any {
   let response = yield axios.get<Product[]>(`${API}/products`, {
     params: { sortBy, order, limit}
   })
-  yield put(getProductSuccess(response.data, sortBy))
+  yield put(getProductSuccess(response.data || [], sortBy))
 }
 
 function* handleSearchProduct ({payload:{search, category}}: SearchProductAction): any {
