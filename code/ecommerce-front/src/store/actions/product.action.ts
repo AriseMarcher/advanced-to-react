@@ -3,7 +3,7 @@ import { Product } from "../../models/product"
 export const GET_PRODUCT = "GET_PRODUCT"
 export const GET_PRODUCT_SUCCESS = "GET_PRODUCT_SUCCESS"
 
-// sortBy： createAt sold
+// sortBy： createdAt sold
 export interface GetProductAction {
   type: typeof GET_PRODUCT
   sortBy: string

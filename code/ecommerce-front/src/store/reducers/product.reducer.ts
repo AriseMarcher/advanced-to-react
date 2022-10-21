@@ -2,7 +2,7 @@ import { Product } from "../../models/product";
 import { GET_PRODUCT, GET_PRODUCT_SUCCESS, ProductUnionType } from "../actions/product.action";
 
 export interface ProductState {
-  createAt: {
+  createdAt: {
     loaded: boolean,
     success: boolean,
     products: Product[]
@@ -15,7 +15,7 @@ export interface ProductState {
 }
 
 const initialState: ProductState = {
-  createAt: {
+  createdAt: {
     loaded: false,
     success: false,
     products: []

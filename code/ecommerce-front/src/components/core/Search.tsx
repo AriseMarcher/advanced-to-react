@@ -22,7 +22,7 @@ const Search = () => {
     <Divider />
     <Row gutter={[16, 16]}>
       <Col span="6">
-        <ProductItem></ProductItem>
+        {/* <ProductItem></ProductItem> */}
       </Col>
     </Row>
   </> 
