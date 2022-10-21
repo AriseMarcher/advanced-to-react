@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <Layout title="首页" subTitle='尽情驰骋吧'>
-      {/* <Search></Search> */}
+      <Search></Search>
       <Title level={5}>最新上架</Title>
 
       <Row gutter={[16, 16]}>

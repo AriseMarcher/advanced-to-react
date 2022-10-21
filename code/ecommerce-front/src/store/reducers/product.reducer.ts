@@ -1,5 +1,5 @@
 import { Product } from "../../models/product";
-import { GET_PRODUCT, GET_PRODUCT_SUCCESS, ProductUnionType } from "../actions/product.action";
+import { GET_PRODUCT, GET_PRODUCT_SUCCESS, ProductUnionType, SEARCH_PRODUCT_SUCCESS } from "../actions/product.action";
 
 export interface ProductState {
   createdAt: {
@@ -11,7 +11,8 @@ export interface ProductState {
     loaded: boolean,
     success: boolean,
     products: Product[]
-  }
+  },
+  search: Product[]
 }
 
 const initialState: ProductState = {
@@ -24,7 +25,8 @@ const initialState: ProductState = {
     loaded: false,
     success: false,
     products: []
-  }
+  },
+  search: []
 }
 
 export default function productReducer (
@@ -49,6 +51,11 @@ export default function productReducer (
           success: true,
           products: action.payload
         }
+      }
+    case SEARCH_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        search: action.products
       }
     default:
       return state
