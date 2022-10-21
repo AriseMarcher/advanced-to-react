@@ -8,10 +8,9 @@ import { getProduct } from '../../store/actions/product.action'
 import { AppState } from '../../store/reducers'
 import { ProductState } from '../../store/reducers/product.reducer'
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const Home = () => {
-  const state = useSelector(state => state)
   const dispatch = useDispatch()
   const { createdAt, sold} = useSelector<AppState, ProductState>(state => state.product)
 

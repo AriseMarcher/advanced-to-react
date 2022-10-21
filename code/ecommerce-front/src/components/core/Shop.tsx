@@ -1,18 +1,33 @@
 import { Col, Row } from 'antd'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import Checkbox from './Checkbox'
 import Layout from './Layout'
 import RadioBox from './RadioBox'
 
 const Shop = () => {
-  const state = useSelector(state => state)
-  console.log(state)
+  const [myFilters, setMyFilters] = useState<{
+    category: string[], price: number[]
+  }>({
+    category: [],
+    price: []
+  })
+
+  useEffect(() => {
+    console.log(myFilters)
+  }, [myFilters])
 
   const filterDOM = () => (
     <>
-      <Checkbox></Checkbox>
-      <RadioBox></RadioBox>
+      <Checkbox
+        handleFilter={(filters: string[]) => {
+          setMyFilters({...myFilters, category: filters})
+        }} />
+      <RadioBox
+        handleFilter={(filters: number[]) => {
+          setMyFilters({...myFilters, price: filters})
+        }}
+      />
     </>
   )
 
