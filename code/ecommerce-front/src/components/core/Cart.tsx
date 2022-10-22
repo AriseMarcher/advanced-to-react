@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import Layout from './Layout'
 import { CartItem, getCart } from '../../helpers/cart'
-import { Col, Row } from 'antd'
+import { Col, Divider, Input, Row } from 'antd'
 import CartItemFc from './CartItemFc'
+import TotalPrice from './TotalPrice'
 
 const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [address, setAddress] = useState<string>("")
+  const [totalPrice, setTotalPrice] = useState<number>(0)
 
   useEffect(() => {
     setCart(getCart())
@@ -35,7 +38,19 @@ const Cart = () => {
     <Layout title="购物车" subTitle='付款吧，我就是你的了'>
       <Row gutter={16}>
         <Col span="16">{showCart()}</Col>
-        <Col span="8"></Col>
+        <Col span="8">
+          <Row>
+            <Input
+              placeholder='请输入收获地址'
+              value={address}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {setAddress(event.target.value)}}
+            />
+          </Row>
+          <Divider />
+          <Row>
+            <TotalPrice cart={cart} setTotalPrice={setTotalPrice} />
+          </Row>
+        </Col>
       </Row>
     </Layout>
   )
