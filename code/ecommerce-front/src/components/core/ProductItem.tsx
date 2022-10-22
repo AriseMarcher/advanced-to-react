@@ -1,8 +1,11 @@
 import { Typography, Button, Card, Row, Col, Image } from 'antd'
+import { push } from 'connected-react-router';
 import moment from 'moment';
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { API } from '../../config';
+import { addItem } from '../../helpers/cart';
 import { Product } from '../../models/product';
 
 const { Title, Paragraph } = Typography;
@@ -18,6 +21,13 @@ const ProductItem: React.FC<Props> = ({
   showViewProduct = true,
   showCartBtn = true
 }) => {
+  const dispatch = useDispatch()
+
+  const addToCart = () => {
+    addItem(product, () => {
+      dispatch(push('/cart'))
+    })
+  }
   const showButtons = () => {
     let buttonArray = []
     showViewProduct && buttonArray.push(
@@ -26,8 +36,8 @@ const ProductItem: React.FC<Props> = ({
       </Button>
     )
     showCartBtn && buttonArray.push(
-      <Button type="link">
-        <Link to="">加入购物车</Link>
+      <Button type="link" onClick={addToCart}>
+        加入购物车
       </Button>
     ) 
     return buttonArray
