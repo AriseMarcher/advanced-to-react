@@ -15,7 +15,7 @@ const ProductItem: React.FC<Props> = ({product}) => {
   return (
     <Card
       cover={
-        <Image src={`${API}/product/photo/${product._id}`} alt={product.name} />
+        <Image className='product-img' src={`${API}/product/photo/${product._id}`} alt={product.name} />
       }
       actions={[
         <Button type="link">

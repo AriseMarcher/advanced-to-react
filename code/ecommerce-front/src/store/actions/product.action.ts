@@ -81,7 +81,7 @@ export interface FilterPayload {
   sortBy?: string,
   limit?: number,
   skip: number,
-  filter?: {
+  filters?: {
     category: string[],
     price: number[]
   }
