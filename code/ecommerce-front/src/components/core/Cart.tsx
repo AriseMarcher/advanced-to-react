@@ -4,6 +4,7 @@ import { CartItem, getCart } from '../../helpers/cart'
 import { Col, Divider, Input, Row } from 'antd'
 import CartItemFc from './CartItemFc'
 import TotalPrice from './TotalPrice'
+import Pay from './Pay'
 
 const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -28,7 +29,7 @@ const Cart = () => {
       </thead>
       <tbody className='ant-table-tbody'>
         {
-          cart.map(item => <CartItemFc setCart={setCart} product={item} />)
+          cart.map(item => <CartItemFc key={item._id} setCart={setCart} product={item} />)
         }
       </tbody>
     </table>
@@ -49,6 +50,9 @@ const Cart = () => {
           <Divider />
           <Row>
             <TotalPrice cart={cart} setTotalPrice={setTotalPrice} />
+          </Row>
+          <Row>
+            <Pay />
           </Row>
         </Col>
       </Row>
