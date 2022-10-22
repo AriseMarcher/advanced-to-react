@@ -8,23 +8,37 @@ import { Product } from '../../models/product';
 const { Title, Paragraph } = Typography;
 
 interface Props {
-  product: Product
+  product: Product,
+  showViewProduct?: boolean,
+  showCartBtn?: boolean
 }
 
-const ProductItem: React.FC<Props> = ({product}) => {
+const ProductItem: React.FC<Props> = ({
+  product,
+  showViewProduct = true,
+  showCartBtn = true
+}) => {
+  const showButtons = () => {
+    let buttonArray = []
+    showViewProduct && buttonArray.push(
+      <Button type="link">
+        <Link to={`/product/${product._id}`}>查看详情</Link>
+      </Button>
+    )
+    showCartBtn && buttonArray.push(
+      <Button type="link">
+        <Link to="">加入购物车</Link>
+      </Button>
+    ) 
+    return buttonArray
+  }
+
   return (
     <Card
       cover={
         <Image className='product-img' src={`${API}/product/photo/${product._id}`} alt={product.name} />
       }
-      actions={[
-        <Button type="link">
-          <Link to={`/product/${product._id}`}>查看详情</Link>
-        </Button>,
-        <Button type="link">
-          <Link to="">加入购物车</Link>
-        </Button>
-      ]}
+      actions={showButtons()}
     >
       <Title level={5}>{product.name}</Title>
       <Paragraph ellipsis={{ rows: 2 }}>{product.description}</Paragraph>
