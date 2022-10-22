@@ -56,3 +56,22 @@ export const updateItem = (productId: string, count: number) => {
   localStorage.setItem('cart', JSON.stringify(cart))
   return cart
 }
+
+/**
+ * 删除购物车中的商品
+ */
+export const deleteItem = (productId: string) => {
+  let cart: CartItem[] = []
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart')!)
+    }
+    cart.forEach((item, index) => {
+      if (item._id === productId) {
+        cart.splice(index, 1)
+      }
+    })
+  }
+  localStorage.setItem('cart', JSON.stringify(cart))
+  return cart
+}
