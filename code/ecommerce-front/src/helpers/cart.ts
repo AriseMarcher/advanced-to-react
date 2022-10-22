@@ -37,3 +37,22 @@ export const getCart = () => {
   }
   return []
 }
+
+/**
+ * 更改购物车中商品的数量
+ */
+export const updateItem = (productId: string, count: number) => {
+  let cart: CartItem[] = []
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart')!)
+    }
+    cart.forEach((item, index) => {
+      if (item._id === productId) {
+        cart[index].count = count
+      }
+    })
+  }
+  localStorage.setItem('cart', JSON.stringify(cart))
+  return cart
+}
