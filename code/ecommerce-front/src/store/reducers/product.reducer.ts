@@ -81,7 +81,7 @@ export default function productReducer (
           success: false,
           result: {
             size: 0,
-            data: []
+            data: state.filter.result.data
           }
         }
       }
